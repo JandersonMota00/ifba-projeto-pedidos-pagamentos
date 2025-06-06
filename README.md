@@ -17,8 +17,12 @@
       <sub><b><a href="https://github.com/JandersonMota">Janderson Mota</a></b></sub>
     </td>
     <td align="center">
-      <img src="" width="100px;" alt="Foto da Integrante Sarah"/><br />
-      <sub><b><a href="https://github.com/">Sarah</a></b></sub>
+      <img src="https://avatars.githubusercontent.com/u/110790276?v=4" width="100px;" alt="Foto da Integrante Sarah"/><br />
+      <sub><b><a href="https://github.com/">Sarah Pithon</a></b></sub>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/114778311?v=4" width="100px;" alt="Foto d0 Integrante Salvador"/><br />
+      <sub><b><a href="https://github.com/">Salvador Cerqueira</a></b></sub>
     </td>
   </tr>
 </table>
