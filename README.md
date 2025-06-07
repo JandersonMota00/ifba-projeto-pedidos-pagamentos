@@ -80,3 +80,102 @@ Sua equipe (até 3 alunos por equipe) foi contratada para desenvolver uma soluç
 ## Ferramentas
 
 - Java, Spring.
+
+# 📌 Solução Proposta
+
+## 🧩 Desafio Escolhido:
+
+Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimentação.
+
+### 1. 🏗️ Escolha e Justificativa do Modelo Arquitetural
+✅ **Modelo: Cliente-Servidor com Centralização em Nuvem**
+
+- Clientes: aplicativos móveis que fazem pedidos.
+- Servidor: Responsável por processar os pedidos, registrar pagamentos e atualizar a fila de produção.
+
+🔧 **Justificativa Técnica**
+
+### 2. 🔌 Definição da Comunicação Remota
+✅ **Protocolo: gRPC com Protocol Buffers**
+
+- Suporte nativo em Java, eficiente e moderno.
+- Permite serialização binária (mais rápida que JSON/XML).
+- Suporte a múltiplas linguagens e fácil integração futura com apps Android/iOS.
+
+🔧 **Justificativa Técnica**
+
+### 3. 🖼️ Diagrama Arquitetural
+
+```
++----------------+        gRPC         +----------------------+         JDBC         +-----------------+
+| Quiosque 1     | <-----------------> | Servidor Central     | <------------------> | Banco de Dados  |
+| (Cliente gRPC) |                     | (Java + Spring Boot) |                      | (PostgreSQL)    |
++----------------+                     +---------------------+                       +-----------------+
+
++----------------+
+| Quiosque 2     |
+| (Cliente gRPC) |
++----------------+
+```
+
+📋 **Componentes**
+- **Clientes (Quiosques)**: Aplicação Java que envia pedidos.
+- **Servidor Central**: Aplicação Spring Boot que recebe e gerencia pedidos.
+- **Banco de Dados**: PostgreSQL para armazenar pedidos e status.
+
+🔐 **Segurança**
+- Autenticação básica via tokens.
+- Possibilidade de usar TLS no canal gRPC.
+
+### 4. 💻 Implementação Técnica (Mínima Obrigatória)
+🎯 **Componentes a serem desenvolvidos:**
+- **Servidor gRPC Java:**
+  - Recebe pedidos (`fazerPedido`)
+  - Responde com status (`confirmarPedido`)
+
+- **2 Clientes Java:**
+  - Enviam pedidos simultaneamente
+  - Recebem confirmação do servidor
+ 
+💡 **Exemplos de métodos no `.proto`:**
+```
+service PedidoService {
+  rpc FazerPedido (PedidoRequest) returns (PedidoResponse);
+}
+
+message PedidoRequest {
+  string nomeProduto = 1;
+  int32 quantidade = 2;
+  string formaPagamento = 3;
+}
+
+message PedidoResponse {
+  string status = 1;
+  string tempoEstimado = 2;
+}
+```
+
+### 5. 📚 Documentação Técnica (Resumo)
+📌 Modelo Escolhido
+- Cliente-Servidor com centralização em nuvem.
+
+📌 Protocolo e Bibliotecas
+- gRPC com Protobuf
+- Java com Spring Boot
+- Banco: PostgreSQL
+
+📌 Estratégias de Sincronização e Segurança
+- Sincronização garantida pela atomicidade dos métodos gRPC.
+- Segurança por meio de autenticação básica (ex: tokens) e possíveis certificados TLS.
+
+📌 Desafios Enfrentados
+- Aprendizado e configuração do gRPC em Java.
+- Serialização correta de mensagens .proto.
+- Conexões simultâneas com tratamento de concorrência (threads).
+
+## ✅ Etapas sugeridas para o grupo
+1. Definir o `.proto` com métodos principais.
+2. Gerar o stub do servidor e clientes via plugin gRPC do Maven.
+3. Implementar o servidor Spring Boot com integração ao banco de dados.
+4. Criar dois clientes que simulam pedidos simultâneos.
+5. Testar a troca de mensagens e documentar a arquitetura e desafios.
