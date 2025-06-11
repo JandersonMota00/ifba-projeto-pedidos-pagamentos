@@ -1,13 +1,13 @@
-package br.com.quiosque.quiosque_api.gRPC;
+package br.com.quiosque.gRPC;
 
 import net.devh.boot.grpc.server.service.GrpcService;
 import io.grpc.stub.StreamObserver;
 
 // Importe as novas classes geradas pelo protobuf
-import br.com.quiosque.grpc.*;
+//import br.com.quiosque.grpc.*;
 
 @GrpcService
-public class QuiosqueServiceImpl extends QuiosqueServiceGrpc.QuiosqueServiceImplBase {
+public class QuiosqueServiceImpl /*extends QuiosqueServiceGrpc.QuiosqueServiceImplBase*/ {
 
     @Override
     public void getProducts(Empty request, StreamObserver<ProductList> responseObserver) {

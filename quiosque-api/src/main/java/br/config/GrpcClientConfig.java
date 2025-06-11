@@ -1,4 +1,4 @@
-package br.com.quiosque.quiosque_api.config;
+package br.config;
 
 import org.springframework.context.annotation.Configuration;
 import net.devh.boot.grpc.client.inject.GrpcClient;
