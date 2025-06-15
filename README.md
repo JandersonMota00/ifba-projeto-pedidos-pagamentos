@@ -107,21 +107,33 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 ### 3. 🖼️ Diagrama Arquitetural
 
 ```
-+----------------+        gRPC         +----------------------+         JDBC         +-----------------+
-| Quiosque 1     | <-----------------> | Servidor Central     | <------------------> | Banco de Dados  |
-| (Cliente gRPC) |                     | (Java + Spring Boot) |                      | (PostgreSQL)    |
-+----------------+                     +---------------------+                       +-----------------+
-
-+----------------+
-| Quiosque 2     |
-| (Cliente gRPC) |
-+----------------+
++--------+                     +------------+
+| Tablet | <-----------------> | Computador |
++--------+                     +------------+
+     |                               |
+     |                               |
+     ---------------------------------
+         |
+         |
+         V
++-----------------+        gRPC         +----------+
+| Quiosque        | <-----------------> | Service  |
+| (Servidor gRPC) |                     | (Java)   |
++-----------------+                     +----------+
+                                             ^
+                                             |
+      _______________________________________|_______________________________________
+      |                                      |                                      |
+      |                                      |                                      |
++-----------+                          +-----------+                          +-----------+
+| Pedido    |                          | Produto   |                          | Venda     |
++-----------+                          +-----------+                          +-----------+
 ```
 
 📋 **Componentes**
-- **Clientes (Quiosques)**: Aplicação Java que envia pedidos.
-- **Servidor Central**: Aplicação Spring Boot que recebe e gerencia pedidos.
-- **Banco de Dados**: PostgreSQL para armazenar pedidos e status.
+- **Servidor gRPC (Quiosques)**: Aplicação Java que envia pedidos.
+- **Service**: Aplicação Java que recebe e gerencia pedidos.
+- **Pedido/Produto/Venda**: Estrutura com as caracteristicas especificas para que o objeto seja criado com base na classe.
 
 🔐 **Segurança**
 - Autenticação básica via tokens.
@@ -136,24 +148,6 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 - **2 Clientes Java:**
   - Enviam pedidos simultaneamente
   - Recebem confirmação do servidor
- 
-💡 **Exemplos de métodos no `.proto`:**
-```
-service PedidoService {
-  rpc FazerPedido (PedidoRequest) returns (PedidoResponse);
-}
-
-message PedidoRequest {
-  string nomeProduto = 1;
-  int32 quantidade = 2;
-  string formaPagamento = 3;
-}
-
-message PedidoResponse {
-  string status = 1;
-  string tempoEstimado = 2;
-}
-```
 
 ### 5. 📚 Documentação Técnica (Resumo)
 📌 Modelo Escolhido
@@ -162,7 +156,6 @@ message PedidoResponse {
 📌 Protocolo e Bibliotecas
 - gRPC com Protobuf
 - Java com Spring Boot
-- Banco: PostgreSQL
 
 📌 Estratégias de Sincronização e Segurança
 - Sincronização garantida pela atomicidade dos métodos gRPC.
@@ -172,10 +165,3 @@ message PedidoResponse {
 - Aprendizado e configuração do gRPC em Java.
 - Serialização correta de mensagens .proto.
 - Conexões simultâneas com tratamento de concorrência (threads).
-
-## ✅ Etapas sugeridas para o grupo
-1. Definir o `.proto` com métodos principais.
-2. Gerar o stub do servidor e clientes via plugin gRPC do Maven.
-3. Implementar o servidor Spring Boot com integração ao banco de dados.
-4. Criar dois clientes que simulam pedidos simultâneos.
-5. Testar a troca de mensagens e documentar a arquitetura e desafios.
