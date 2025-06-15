@@ -110,6 +110,7 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 +--------+                     +------------+
 | Tablet |                     | Computador |
 +--------+                     +------------+
+     ^                               ^
      |                               |
      |                               |
      ---------------------------------
