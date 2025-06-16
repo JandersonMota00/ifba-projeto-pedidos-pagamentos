@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package proto;
+
+option java_package = "com.proto.conexoes";
+option java_multiple_files = true;
+
+service ConexoesService {
+  // QUIOSQUE
+  // Adicionar produto
+  rpc AdicionarProduto(AdicionarProdutoRequest) returns (AdicionarProdutoResponse);
+  // Remover produto
+  rpc RemoverProduto(RemoverProdutoRequest) returns (RemoverProdutoResponse);
+  // Visualizar vendas
+  rpc VisualizarVendas(VisualizarVendasRequest) returns (VisualizarVendasResponse);
+  // Visualizar pedidos
+  rpc VisualizarPedidos(VisualizarPedidosRequest) returns (VisualizarPedidosResponse);
+  // Finalizar pedido
+  rpc FinalizarPedido(FinalizarPedidoRequest) returns (FinalizarPedidoResponse);
+
+  // CLIENTE
+  // Visualizar produtos
+  rpc VisualizarProdutos(VisualizarProdutosRequest) returns (VisualizarProdutosResponse);
+  // Realizar pedido
+  rpc RealizarPedido(RealizarPedidoRequest) returns (RealizarPedidoResponse);
+}
+
+message AdicionarProdutoRequest {
+  string nome = 1;
+  double preco = 2;
+  int32 estoque = 3;
+  int32 tempoPreparo = 4;
+}
+
+message AdicionarProdutoResponse {
+  string confirmacao = 1;
+}
+
+message RemoverProdutoRequest {
+  string nome = 1;
+}
+
+message RemoverProdutoResponse {
+  string confirmacao = 1;
+}
+
+message VisualizarVendasRequest {
+  string mensagem = 1;
+}
+
+message VisualizarProdutoVenda {
+  string nome = 1;
+}
+
+message VisualizarVenda {
+  string nomeCliente = 1;
+  double valorVenda = 2;
+  string dataHora = 3;
+  repeated VisualizarProdutoVenda produtos = 4;
+}
+
+message VisualizarVendasResponse {
+  repeated VisualizarVenda vendas = 1;
+}
+
+message VisualizarPedidosRequest {
+  string mensagem = 1;
+}
+
+message VisualizarProdutoPedido {
+  string nome = 1;
+}
+
+message VisualizarPedidos {
+  string nomeCliente = 1;
+  repeated VisualizarProdutoPedido produtos = 2;
+  double valorPedido = 3;
+  string idPedido = 4;
+}
+
+message VisualizarPedidosResponse {
+  repeated VisualizarPedidos pedidos = 1;
+}
+
+message FinalizarPedidoRequest {
+  string idPedido = 1;
+}
+
+message FinalizarPedidoResponse {
+  string mensagem = 1;
+}
+
+message VisualizarProdutosRequest {
+  string mensagem = 1;
+}
+
+message VisualizarProduto {
+  string nome = 1;
+  double preco = 2;
+  int32 estoque = 3;
+  int32 tempoPreparo = 4;
+}
+
+message VisualizarProdutosResponse {
+  repeated VisualizarProduto produto = 1;
+}
+
+message RealizarPedidoProdutos {
+  string nome = 1;
+  int32 quantidade = 2;
+}
+
+message RealizarPedidoRequest {
+  string nomeCliente = 1;
+  double valorPago = 2;
+  repeated RealizarPedidoProdutos produtos = 3;
+}
+
+message RealizarPedidoResponse {
+  string confirmacao = 1;
+  int32 previsaoTempo = 2;
+}
