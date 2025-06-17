@@ -90,8 +90,8 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 ### 1. 🏗️ Escolha e Justificativa do Modelo Arquitetural
 ✅ **Modelo: Cliente-Servidor com Centralização em Nuvem**
 
-- Clientes: aplicativos móveis que fazem pedidos.
-- Servidor: Responsável por processar os pedidos, registrar pagamentos e atualizar a fila de produção.
+- Clientes: aplicativos móveis que realizam os pedidos e computador do Quiosque para manipular estoques, pedidos e vendas.
+- Servidor: responsável por armazenar os pedidos, vendas, estoque e pagamentos, além de oferecer as operações que os Clientes podem executar.
 
 🔧 **Justificativa Técnica**
 
