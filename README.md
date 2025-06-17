@@ -95,6 +95,8 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 
 🔧 **Justificativa Técnica**
 
+  Nossa escolha pelo modelo cliente-servidor foi uma decisão técnica para ter mais controle e segurança. Com isso, os quiosques têm uma alta dependência do servidor central, o que é bom para garantir que o cardápio e os preços estejam sempre iguais para todos. Isso significa que a escalabilidade do sistema, ou seja, a capacidade de aguentar mais quiosques ou mais pedidos, depende totalmente da potência do servidor; para crescer, o jeito mais fácil é simplesmente deixar o servidor mais forte. O ponto negativo que aceitamos com esse modelo é a latência, ou seja, uma pequena demora na resposta toda vez que o quiosque precisa conversar com o servidor, mas essa troca valeu a pena para ter um sistema mais seguro e muito mais fácil de atualizar e gerenciar a partir de um só lugar.
+
 ### 2. 🔌 Definição da Comunicação Remota
 ✅ **Protocolo: gRPC com Protocol Buffers**
 
@@ -103,6 +105,8 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 - Suporte a múltiplas linguagens e fácil integração futura com apps Android/iOS.
 
 🔧 **Justificativa Técnica**
+
+  Nós escolhemos usar o gRPC porque, além de ser muito mais rápido e eficiente, ele torna o desenvolvimento mais fácil e direto. Com as outras opções, como os sockets, teríamos que construir toda a lógica de comunicação do zero, o que é bem mais difícil e demorado. O gRPC cuida de toda essa parte complicada para nós e funciona com um "manual de instruções" (o arquivo .proto) que cria regras claras de como o cliente e o servidor devem conversar. Isso evitou muita dor de cabeça com erros de integração e permitiu que nosso time trabalhasse melhor. No fim das contas, essa organização e a forma otimizada como o gRPC se comunica resultam em um sistema com respostas muito mais rápidas para o usuário.
 
 ### 3. 🖼️ Diagrama Arquitetural
 
@@ -135,10 +139,6 @@ Sistema de pedidos e pagamentos para quiosques autônomos de praça de alimenta�
 - **Servidor gRPC (Quiosques)**: Aplicação Java que envia pedidos.
 - **Service**: Aplicação Java que recebe e gerencia pedidos.
 - **Pedido/Produto/Venda**: Estrutura com as caracteristicas especificas para que o objeto seja criado com base na classe.
-
-🔐 **Segurança**
-- Autenticação básica via tokens.
-- Possibilidade de usar TLS no canal gRPC.
 
 ### 4. 💻 Implementação Técnica (Mínima Obrigatória)
 🎯 **Componentes a serem desenvolvidos:**
